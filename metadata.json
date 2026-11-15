@@ -1,0 +1,6 @@
+{
+  "name": "Abhinav AI",
+  "description": "Bilingual (English & Hindi) AI chatbot powered by Gemini with streaming responses, chat history, and a dark navy, electric blue, and purple gradient UI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

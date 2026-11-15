@@ -1,0 +1,101 @@
+{
+  "entities": {
+    "ChatSession": {
+      "title": "ChatSession",
+      "description": "A conversation thread owned by an authenticated user in Abhinav AI.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Authenticated owner UID matching request.auth.uid."
+        },
+        "title": {
+          "type": "string",
+          "description": "Short conversation title derived from the opening prompt."
+        },
+        "languageHint": {
+          "type": "string",
+          "enum": ["auto", "en", "hi"],
+          "description": "Preferred conversation language mode (auto, English, or Hindi)."
+        },
+        "lastMessagePreview": {
+          "type": "string",
+          "description": "Preview snippet of the most recent message."
+        },
+        "messageCount": {
+          "type": "integer",
+          "description": "Total number of messages in this chat session."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp written via FieldValue.serverTimestamp()."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp updated via FieldValue.serverTimestamp()."
+        }
+      },
+      "required": [
+        "userId",
+        "title",
+        "languageHint",
+        "lastMessagePreview",
+        "messageCount",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "An individual user or model message within a ChatSession.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Authenticated owner UID matching request.auth.uid."
+        },
+        "chatId": {
+          "type": "string",
+          "description": "Parent ChatSession document ID."
+        },
+        "role": {
+          "type": "string",
+          "enum": ["user", "model"],
+          "description": "Message author role ('user' or 'model')."
+        },
+        "text": {
+          "type": "string",
+          "description": "Message content in English, Hindi, or mixed script."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp written via FieldValue.serverTimestamp()."
+        }
+      },
+      "required": [
+        "userId",
+        "chatId",
+        "role",
+        "text",
+        "createdAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/chats/{chatId}": {
+      "schema": {
+        "$ref": "#/entities/ChatSession"
+      },
+      "description": "User-scoped AI conversation threads."
+    },
+    "/users/{userId}/chats/{chatId}/messages/{messageId}": {
+      "schema": {
+        "$ref": "#/entities/ChatMessage"
+      },
+      "description": "Ordered messages inside a user-scoped AI conversation thread."
+    }
+  }
+}
